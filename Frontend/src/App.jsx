@@ -6,14 +6,16 @@ import {Dashboard} from "./components/Dashboard"
 import Cookies from 'js-cookie';
 
 
-const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = userIsAuthenticated(); 
-  return isAuthenticated ? children : <Navigate to="/login" />;
-};
+// const ProtectedRoute = ({ children }) => {
+//   const isAuthenticated = userIsAuthenticated(); 
+//   console.log(isAuthenticated)
+//   return isAuthenticated ? children : <Navigate to="/login" />;
+// };
 
-const userIsAuthenticated = () => {
-  return Cookies.get('token') !== undefined;
-};
+// const userIsAuthenticated = () => {
+//   console.log(Cookies.get("token"))
+//   return Cookies.get('token') !== undefined;
+// };
 
 function App() {
   return (
@@ -24,9 +26,10 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
-              <Dashboard/>
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            //   <Dashboard/>
+            // </ProtectedRoute>
+             <Dashboard/>
           }
         />
       </Routes>

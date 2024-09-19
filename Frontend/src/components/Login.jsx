@@ -26,10 +26,9 @@ export function Login() {
   const handleSubmit = async(e)=>{
     e.preventDefault()
     try{
-      const response = await axios.post("http://localhost:8000/api/v1/login" , {...user})
+      const response = await axios.post("http://localhost:8000/api/v1/login" , {...user} , {withCredentials : true})
         if (response.status === 200) {
-          console.log(response)
-          navigate("/dashboard" , {state : response.data.userData})
+          navigate("/dashboard" , {state : {user : response.data.userData}})
           setUser({
             email:"",
             password :""
@@ -39,8 +38,6 @@ export function Login() {
       console.log(error)
     }
  }
-  console.log(user)
-
   return (
     <>
        <div className="min-h-screen flex bg-gray-900">

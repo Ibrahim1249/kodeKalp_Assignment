@@ -22,7 +22,7 @@ async function sendMailer(userEmail , loginLink){
       `
     };
     const info = await transporter.sendMail(mailOptions);
-    console.log('Registration email sent: ', info.messageId);
+    // console.log('Registration email sent: ', info.messageId);
     return true;
   } catch (error) {
     console.error('Error sending registration email: ', error);

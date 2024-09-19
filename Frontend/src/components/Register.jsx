@@ -10,11 +10,13 @@ import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from 'lucide-react'
 
 export function Register() {
   const { toast } = useToast()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const [user , setUser]  = useState({
     username:"",
     email:"",
@@ -29,10 +31,12 @@ export function Register() {
   }
   const handleSubmit = async(e)=>{
     e.preventDefault()
+
     try{
+      setIsLoading(true)
         const response = await axios.post("http://localhost:8000/api/v1/register" , {...user})
+        setIsLoading(false)
         if (response.status === 201) {
-          console.log(response)
           toast({
             title: "Message Sent",
             description: "You have Register successfully Please check your email !!.",
@@ -48,7 +52,7 @@ export function Register() {
       console.log(error)
     }
  }
-  console.log(user)
+
 
   return (
     <>
@@ -122,7 +126,14 @@ export function Register() {
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
             >
-              Create account
+             {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                'Create account'
+              )}
             </Button>
           </form>
           <div className="mt-6">

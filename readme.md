@@ -7,21 +7,6 @@ The project is live and can be accessed here: [Click Here]()
 
 ## Tech Stack
 
-- React.js
-- Shadcn UI (built on Tailwind CSS)
-- LocalStorage (for data persistence)
-
-## Features
-
-- User authentication (signup and login).
-- Email verification via an SMTP server.
-- Password hashing for secure storage.
-- Real-time form validation.
-- MongoDB Atlas Cloud as the backend database.
-- Hosted on Vercel for seamless deployment.
-
-## Tech Stack
-
 # Frontend
 - Framework: React.js
 - UI Components: SHADCN components
@@ -36,6 +21,15 @@ The project is live and can be accessed here: [Click Here]()
 - Authentication: JWT (JSON Web Tokens) for session management
 - Environment Variables: Managed securely via .env
 - Project Structure
+
+## Features
+
+- User authentication (signup and login).
+- Email verification via an SMTP server.
+- Password hashing for secure storage.
+- Real-time form validation.
+- MongoDB Atlas Cloud as the backend database.
+- Hosted on Vercel for seamless deployment.
 
 ## Installation
 
