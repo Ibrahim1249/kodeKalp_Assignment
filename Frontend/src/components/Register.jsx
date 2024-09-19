@@ -8,9 +8,33 @@ import register from "../assets/register.jpg";
 import { useState } from "react";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export function Register() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user , setUser]  = useState({
+    username:"",
+    email:"",
+    password :""
+  })
+
+  const handleChange = (e)=>{
+     const {name , value} = e.target;
+     setUser((prev)=>{
+       return {...prev , [name] : value}
+     })
+  }
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    try{
+        const response = await axios.post("http://localhost:8000/api/v1/register" , {...user})
+        console.log(response)
+    }catch(error){
+      console.log(error)
+    }
+ }
+  console.log(user)
+
   return (
     <>
        <div className="min-h-screen flex bg-gray-900">
@@ -22,7 +46,7 @@ export function Register() {
             Sign up and start your journey
             </p>
           </div>
-          <form className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="username" className="text-white">
@@ -31,9 +55,11 @@ export function Register() {
                 <Input
                   id="username"
                   type="text"
+                  name="username"
                   required
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
                   placeholder="johndoe"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -43,9 +69,11 @@ export function Register() {
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   required
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
                   placeholder="john@example.com"
+                  onChange={handleChange}
                 />
               </div>
               <div className="relative">
@@ -54,10 +82,12 @@ export function Register() {
                 </Label>
                 <Input
                   id="password"
-                  type="password"
+                  type={isOpen ? "text" : "password"}
+                  name="password"
                   required
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
                   placeholder="••••••••"
+                  onChange={handleChange}
                 />
                 <span
                   onClick={() => {
