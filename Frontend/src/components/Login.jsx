@@ -2,12 +2,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { GithubIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../assets/login.jpg";
 import { Label } from "@/components/ui/label";
-
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { useState  } from "react";
+import axios from "axios";
 
 export function Login() {
+  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false);
+  const [user , setUser]  = useState({
+    email:"",
+    password :""
+  })
+
+  const handleChange = (e)=>{
+     const {name , value} = e.target;
+     setUser((prev)=>{
+       return {...prev , [name] : value}
+     })
+  }
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    try{
+      const response = await axios.post("http://localhost:8000/api/v1/login" , {...user})
+        if (response.status === 200) {
+          console.log(response)
+          navigate("/dashboard" , {state : response.data.userData})
+          setUser({
+            email:"",
+            password :""
+          })
+        }
+    }catch(error){
+      console.log(error)
+    }
+ }
+  console.log(user)
 
   return (
     <>
@@ -20,7 +52,7 @@ export function Login() {
               Please sign in to your account
             </p>
           </div>
-          <form className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="email" className="text-white">
@@ -29,21 +61,37 @@ export function Login() {
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
                   placeholder="john@example.com"
+                  onChange={handleChange}
                 />
               </div>
-              <div>
+              <div className="relative">
                 <Label htmlFor="password" className="text-white">
                   Password
                 </Label>
                 <Input
                   id="password"
-                  type="password"
+                  type={isOpen ? "text" : "password"}
                   required
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
                   placeholder="••••••••"
+                  name="password"
+                  onChange={handleChange}
                 />
+                 <span
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                  className="absolute top-7 right-2 p-2 cursor-pointer "
+                >
+                  {isOpen ? (
+                    <EyeOpenIcon className="fill-white" />
+                  ) : (
+                    <EyeClosedIcon className="fill-white" />
+                  )}
+                </span>
               </div>
             </div>
             <div className="flex items-center justify-between">

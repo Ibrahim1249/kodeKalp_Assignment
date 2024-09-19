@@ -1,8 +1,10 @@
 
 const bcrypt = require('bcrypt');
-const userRegisterModel = require("../model/userRegister.js")
+const userRegisterModel = require("../model/userRegister.js");
+const { generateToken } = require('../middleware/jwt.js');
 
 async function handleUserLogin(req,res){
+
     try{
         const {email , password} = req.body;
          const  userData = await userRegisterModel.findOne({email}).select("-__v -_id") 
@@ -11,7 +13,20 @@ async function handleUserLogin(req,res){
          }
  
          const matchUserFromDB = await bcrypt.compare(password , userData.password);
+
          if(matchUserFromDB){
+              // create payload 
+              const payload = {
+                  userId : matchUserFromDB._id,
+                  email : matchUserFromDB.email
+              }
+              const token = generateToken(payload)
+              res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict', 
+                maxAge: 3600000 // Cookie expiry in (1 hour)
+              });
              return res.json({ message: "User login successful", userData });
          }else{
              return res.status(401).json({ message: "Incorrect Password" });
