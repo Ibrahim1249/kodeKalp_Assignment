@@ -7,10 +7,13 @@ import { GithubIcon } from "lucide-react";
 import register from "../assets/register.jpg";
 import { useState } from "react";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 export function Register() {
+  const { toast } = useToast()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   const [user , setUser]  = useState({
     username:"",
@@ -28,7 +31,19 @@ export function Register() {
     e.preventDefault()
     try{
         const response = await axios.post("http://localhost:8000/api/v1/register" , {...user})
-        console.log(response)
+        if (response.status === 201) {
+          console.log(response)
+          toast({
+            title: "Message Sent",
+            description: "You have Register successfully Please check your email !!.",
+          })
+          setUser({
+            username:"",
+            email:"",
+            password :""
+          })
+          navigate("/login")
+        }
     }catch(error){
       console.log(error)
     }
