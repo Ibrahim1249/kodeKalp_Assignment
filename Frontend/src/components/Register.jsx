@@ -34,7 +34,7 @@ export function Register() {
 
     try{
       setIsLoading(true)
-        const response = await axios.post("http://localhost:8000/api/v1/register" , {...user})
+        const response = await axios.post("https://kodekalp-assignment-wvts.onrender.com/api/v1/register" , {...user})
         setIsLoading(false)
         if (response.status === 201) {
           toast({
@@ -50,6 +50,11 @@ export function Register() {
         }
     }catch(error){
       console.log(error)
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      })
     }
  }
 

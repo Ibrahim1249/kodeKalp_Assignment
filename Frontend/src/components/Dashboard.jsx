@@ -13,13 +13,18 @@ export function Dashboard() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/logout', null, { withCredentials: true });
+      const response = await axios.post('https://kodekalp-assignment-wvts.onrender.com/api/v1/logout', null, { withCredentials: true });
        if(response.status == 200){
         navigate('/login');
        }
       
     } catch (error) {
       console.log('Logout error:', error);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      })
     }
   };
 

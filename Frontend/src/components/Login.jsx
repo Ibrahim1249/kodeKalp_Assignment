@@ -26,7 +26,7 @@ export function Login() {
   const handleSubmit = async(e)=>{
     e.preventDefault()
     try{
-      const response = await axios.post("http://localhost:8000/api/v1/login" , {...user} , {withCredentials : true})
+      const response = await axios.post("https://kodekalp-assignment-wvts.onrender.com/api/v1/login" , {...user} , {withCredentials : true})
         if (response.status === 200) {
           navigate("/dashboard" , {state : {user : response.data.userData}})
           setUser({
@@ -36,6 +36,11 @@ export function Login() {
         }
     }catch(error){
       console.log(error)
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      })
     }
  }
   return (
