@@ -35,6 +35,7 @@ export function Register() {
     try{
       setIsLoading(true)
         const response = await axios.post("https://kodekalp-assignment-wvts.onrender.com/api/v1/register" , {...user})
+        console.log(response)
         setIsLoading(false)
         if (response.status === 201) {
           toast({

@@ -9,7 +9,8 @@ dotenv.config();
 const app = express()
 const port = process.env.PORT || 3000
 const corsOptions = {
-    origin: 'https://kodekalp-assignment-front.onrender.com', // Your frontend URL
+     origin: 'https://kodekalp-assignment-front.onrender.com',
+    // origin: 'http://localhost:5173', // Your frontend URL
     credentials: true, 
     allowedHeaders : ['Content-Type' , 'Authorization']
 }

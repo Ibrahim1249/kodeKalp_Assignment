@@ -7,6 +7,7 @@ const saltRounds = 10;
 async function handleUserRegistration(req,res){
     try{
         const {username , email , password} = req.body;
+        console.log(req.body)
          const userId = uuidv4()
          const hashPassword = await bcrypt.hash(password , saltRounds);
          const userToSave = new userRegisterModel({ uuid : userId , username , email , password : hashPassword}) 

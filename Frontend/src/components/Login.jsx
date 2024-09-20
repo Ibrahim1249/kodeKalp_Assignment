@@ -8,10 +8,14 @@ import { Label } from "@/components/ui/label";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { useState  } from "react";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from 'lucide-react'
 
 export function Login() {
   const navigate = useNavigate()
+  const { toast } = useToast()
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const [user , setUser]  = useState({
     email:"",
     password :""
@@ -109,7 +113,14 @@ export function Login() {
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
             >
-              Sign in
+             {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  please wait...
+                </>
+              ) : (
+                'Sign in'
+              )}
             </Button>
           </form>
           <div className="mt-6">
