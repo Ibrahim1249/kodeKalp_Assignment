@@ -9,10 +9,10 @@ function checkValidEmail(req,res,next){
               if(response.body.result === 'deliverable'){
                 next()
               }else{
-                 res.status(400).send("InValid email address")
+                 res.status(400).json({error :"InValid email address"})
               }
           }else{
-              res.status(500).send("Internal server error")
+              res.status(500).json({error : "Internal server error"})
           }
     });
 }
