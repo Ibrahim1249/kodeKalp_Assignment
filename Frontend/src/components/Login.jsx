@@ -41,6 +41,7 @@ export function Login() {
         description: error.message,
         variant: "destructive"
       })
+      setIsLoading(false)
     }
  }
   return (

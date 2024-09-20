@@ -25,6 +25,7 @@ export function Dashboard() {
         description: error.message,
         variant: "destructive"
       })
+      setIsLoading(false)
     }
   };
 

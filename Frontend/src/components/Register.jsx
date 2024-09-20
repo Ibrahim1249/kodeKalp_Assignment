@@ -55,6 +55,7 @@ export function Register() {
         description: error.message,
         variant: "destructive"
       })
+      setIsLoading(false)
     }
  }
 
